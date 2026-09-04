@@ -50,7 +50,7 @@ public class SmaliMod {
         return assembleSmaliFile(is, dexBuilder, verboseErrors, printTokens, smaliFile);
     }
 
-    public static boolean assembleSmaliFile(InputStream is,DexBuilder dexBuilder, boolean verboseErrors,
+    public static boolean assembleSmaliFile(InputStream is, DexBuilder dexBuilder, boolean verboseErrors,
                                             boolean printTokens, File smaliFile) throws IOException, RecognitionException {
 
         // copy our filestream into a tmp file, so we don't overwrite
@@ -61,10 +61,10 @@ public class SmaliMod {
         IOUtils.copy(is, os);
         os.close();
 
-        return assembleSmaliFile(tmp,dexBuilder, verboseErrors, printTokens);
+        return assembleSmaliFile(tmp, dexBuilder, verboseErrors, printTokens);
     }
 
-    public static boolean assembleSmaliFile(File smaliFile,DexBuilder dexBuilder, boolean verboseErrors,
+    public static boolean assembleSmaliFile(File smaliFile, DexBuilder dexBuilder, boolean verboseErrors,
                                             boolean printTokens) throws IOException, RecognitionException {
 
         CommonTokenStream tokens;
@@ -73,7 +73,8 @@ public class SmaliMod {
         InputStream is = new FileInputStream(smaliFile);
         InputStreamReader reader = new InputStreamReader(is, "UTF-8");
 
-        lexer = new smaliFlexLexer(reader);
+        // Use correct constructor for smaliFlexLexer (Reader, int)
+        lexer = new smaliFlexLexer(reader, 1);
         ((smaliFlexLexer)lexer).setSourceFile(smaliFile);
         tokens = new CommonTokenStream((TokenSource) lexer);
 
