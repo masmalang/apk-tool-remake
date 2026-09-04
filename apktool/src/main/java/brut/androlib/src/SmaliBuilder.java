@@ -47,12 +47,13 @@ public class SmaliBuilder {
 
     private void build() throws AndrolibException {
         try {
-            DexBuilder dexBuilder = DexBuilder.makeDexBuilder();
+            // Use constructor instead of makeDexBuilder() for dexlib2 2.5.2
+            DexBuilder dexBuilder = new DexBuilder();
 
             for (String fileName : mSmaliDir.getDirectory().getFiles(true)) {
                 buildFile(fileName, dexBuilder);
             }
-            dexBuilder.writeTo(new FileDataStore( new File(mDexFile.getAbsolutePath())));
+            dexBuilder.writeTo(new FileDataStore(new File(mDexFile.getAbsolutePath())));
         } catch (IOException | DirectoryException ex) {
             throw new AndrolibException(ex);
         }
@@ -65,7 +66,7 @@ public class SmaliBuilder {
 
         if (fileName.endsWith(".smali")) {
             try {
-                if (!SmaliMod.assembleSmaliFile(inFile,dexBuilder, false, false)) {
+                if (!SmaliMod.assembleSmaliFile(inFile, dexBuilder, false, false)) {
                     throw new AndrolibException("Could not smali file: " + fileName);
                 }
             } catch (IOException | RecognitionException ex) {
