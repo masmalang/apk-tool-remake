@@ -51,16 +51,10 @@ public class SmaliDecoder {
         try {
             BaksmaliOptions options = new BaksmaliOptions();
 
-            // Set the output directory
-            options.outputDirectory = mOutDir;
-
-            // Set debug info output
-            options.outputDebugInfo = mBakDeb;
-
             // Get API opcodes
             Opcodes opcodes = Opcodes.forApi(mApi);
 
-            // Load the dex file using correct API
+            // Load the dex file using correct API for baksmali 2.5.2
             DexBackedDexFile dexFile = DexFileFactory.loadDexFile(mApkFile, opcodes);
 
             if (dexFile instanceof DexBackedOdexFile) {
@@ -68,8 +62,8 @@ public class SmaliDecoder {
                         InlineMethodResolver.createInlineMethodResolver(((DexBackedOdexFile)dexFile).getOdexVersion());
             }
 
-            // Disassemble using correct API
-            Baksmali.disassembleDexFile(dexFile, mOutDir, mOutDir, options);
+            // Disassemble using correct API for baksmali 2.5.2
+            Baksmali.disassembleDexFile(dexFile, mOutDir, options);
 
         } catch (IOException ex) {
             throw new AndrolibException(ex);
