@@ -12,9 +12,9 @@ import urllib.error
 from getpass import getpass
 
 # Konfigurasi
-USERNAME = "masmalang"
-REPO_NAME = "apk-tool-remake"
-DESCRIPTION = "Decompile apk Android modern"
+USERNAME = "jinwofuruda-cloud"
+REPO_NAME = "ida-droid"
+DESCRIPTION = "IDA Droid - Android Terminal Emulator"
 PRIVATE = False
 
 def print_status(message, status="INFO"):
